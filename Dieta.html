@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍎 Entrenamiento: Alimentación Saludable</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: #e8f5e9;
+            padding: 25px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 950px;
+            width: 100%;
+            background: white;
+            border-radius: 30px;
+            padding: 30px 35px;
+            box-shadow: 0 20px 50px rgba(0,40,20,0.15);
+        }
+        h1 {
+            color: #1e4a36;
+            font-size: 2.2rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+        h1 small {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: #4a7a5e;
+        }
+        .subhead {
+            color: #3a6b4e;
+            margin-bottom: 25px;
+            border-left: 5px solid #4caf50;
+            padding-left: 18px;
+            font-style: italic;
+        }
+        .texto-original {
+            background: #f1f9f2;
+            padding: 22px 28px;
+            border-radius: 18px;
+            margin-bottom: 30px;
+            border: 1px solid #c8e6c9;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+        .texto-original .destacada {
+            color: #1b6b3b;
+            font-weight: 700;
+            background: #d4edda;
+            padding: 0 6px;
+            border-radius: 6px;
+        }
+        .texto-original .fuente {
+            display: block;
+            margin-top: 12px;
+            font-size: 0.8rem;
+            color: #5d7a66;
+            text-align: right;
+            border-top: 1px dashed #b8d9be;
+            padding-top: 10px;
+        }
+        .section-title {
+            font-size: 1.5rem;
+            color: #1e4a36;
+            margin: 35px 0 18px;
+            border-bottom: 3px solid #a5d6a7;
+            padding-bottom: 8px;
+        }
+        .word-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px,1fr));
+            gap: 8px 18px;
+            background: #fafffa;
+            padding: 18px 22px;
+            border-radius: 16px;
+            border: 1px solid #c8e6c9;
+            margin-bottom: 30px;
+        }
+        .word-grid span {
+            font-size: 0.95rem;
+            color: #1d4a2e;
+        }
+        .word-grid .badge {
+            background: #2e7d4e;
+            color: white;
+            font-size: 0.7rem;
+            padding: 1px 10px;
+            border-radius: 30px;
+            margin-left: 6px;
+        }
+        /* Estilos generales para ejercicios */
+        .ejercicio {
+            background: #fafffa;
+            border-radius: 18px;
+            padding: 20px 25px;
+            margin-bottom: 18px;
+            border: 1px solid #dcedc8;
+        }
+        .ejercicio p {
+            font-weight: 600;
+            color: #1d4a2e;
+            margin-bottom: 10px;
+        }
+        .ejercicio .frase {
+            font-weight: 400;
+            color: #1d2f24;
+            background: #f1f9f2;
+            padding: 10px 16px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            font-size: 1.05rem;
+        }
+        .ejercicio .frase .blank {
+            display: inline-block;
+            min-width: 80px;
+            border-bottom: 3px dashed #4caf50;
+            color: #1b6b3b;
+            font-weight: 700;
+            padding: 0 4px;
+        }
+        .opciones {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 16px;
+            margin: 8px 0 4px;
+        }
+        .opciones label {
+            background: #eef5ee;
+            padding: 6px 18px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            border: 2px solid transparent;
+            transition: 0.15s;
+        }
+        .opciones label:hover {
+            background: #d4e8d6;
+            border-color: #81c784;
+        }
+        .opciones input[type="radio"] {
+            margin-right: 6px;
+            accent-color: #2e7d4e;
+        }
+        .btn-respuesta {
+            background: #2e7d4e;
+            color: white;
+            border: none;
+            padding: 8px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.95rem;
+            margin: 6px 0 0;
+            transition: 0.15s;
+        }
+        .btn-respuesta:hover {
+            background: #1b5e3a;
+        }
+        .btn-respuesta:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .feedback {
+            margin-top: 10px;
+            padding: 12px 18px;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            display: none;
+        }
+        .feedback.acierto {
+            display: block;
+            background: #d4edda;
+            color: #155724;
+            border-left: 6px solid #28a745;
+        }
+        .feedback.error {
+            display: block;
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 6px solid #dc3545;
+        }
+        .feedback .explicacion {
+            font-weight: 400;
+            color: #2a4a3a;
+            margin-top: 4px;
+            font-size: 0.9rem;
+        }
+
+        /* Comprensión */
+        .question-card {
+            background: #f8fbf9;
+            border: 1px solid #c8e6c9;
+            border-radius: 16px;
+            padding: 18px 22px;
+            margin-bottom: 16px;
+        }
+        .question-card .q-text {
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: #1d4a2e;
+        }
+        .question-card .btn-mostrar {
+            background: transparent;
+            border: 2px solid #2e7d4e;
+            color: #2e7d4e;
+            padding: 4px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.85rem;
+            margin-top: 10px;
+            transition: 0.15s;
+        }
+        .question-card .btn-mostrar:hover {
+            background: #2e7d4e;
+            color: white;
+        }
+        .question-card .respuesta {
+            display: none;
+            margin-top: 12px;
+            padding: 12px 18px;
+            background: #d4edda;
+            border-radius: 12px;
+            color: #155724;
+            border-left: 6px solid #28a745;
+        }
+        .question-card .respuesta.visible {
+            display: block;
+        }
+
+        /* Abiertas */
+        .open-question {
+            background: #fafffa;
+            border: 1px solid #dcedc8;
+            border-radius: 16px;
+            padding: 16px 22px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+        .open-question .num {
+            background: #2e7d4e;
+            color: white;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .open-question .texto {
+            font-size: 1.05rem;
+            color: #1d2f24;
+            line-height: 1.5;
+        }
+
+        /* Teoría gramatical */
+        .teoria-box {
+            background: #f1f9f2;
+            padding: 18px 25px;
+            border-radius: 18px;
+            margin-bottom: 25px;
+            border: 1px solid #c8e6c9;
+        }
+        .teoria-box h3 {
+            color: #1b5e3a;
+            margin: 12px 0 4px;
+        }
+        .teoria-box h3:first-of-type {
+            margin-top: 0;
+        }
+        .teoria-box p {
+            margin-bottom: 6px;
+            line-height: 1.6;
+        }
+        .teoria-box .ejemplo {
+            background: white;
+            padding: 4px 12px;
+            border-radius: 30px;
+            display: inline-block;
+            font-weight: 600;
+            color: #1a4a2e;
+            border: 1px solid #b8d9be;
+            margin: 2px 4px 2px 0;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #4a7a5e;
+            font-size: 0.9rem;
+            border-top: 1px solid #c8e6c9;
+            padding-top: 20px;
+        }
+        @media (max-width: 600px) {
+            .container { padding: 18px; }
+            h1 { font-size: 1.6rem; }
+            .texto-original { padding: 16px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <h1>🥗 Entrenamiento <small>vocabulario + gramática</small></h1>
+    <div class="subhead">📖 Texto real de la <strong>Organización Mundial de la Salud</strong> sobre alimentación saludable</div>
+
+    <!-- ============ TEXTO ORIGINAL ============ -->
+    <div class="texto-original">
+        <p>
+            La base de toda alimentación saludable es un conjunto de alimentos mínimamente procesados, con bajo contenido de grasas no saludables, azúcares y sodio.
+            Una dieta saludable debe basarse en cuatro principios: <span class="destacada">adecuación</span>, <span class="destacada">equilibrio</span>, <span class="destacada">moderación</span> y <span class="destacada">diversidad</span>.
+            La dieta debe cubrir las necesidades de nutrientes sin excederlas.
+            La ingesta calórica debe corresponderse con el gasto energético.
+            Hay que limitar los nutrientes que pueden resultar <span class="destacada">peligrosos</span> para la salud.
+            Debe incluirse una amplia <span class="destacada">variedad</span> de alimentos nutritivos.
+        </p>
+        <p style="margin-top:12px;">
+            <strong>En la práctica</strong>, esto significa <span class="destacada">comparar</span> nuestras elecciones. <span class="destacada">Al menos</span>, debemos esforzarnos por <span class="destacada">rechazar</span> los ultraprocesados, que suelen <span class="destacada">disfrazarse</span> de opciones prácticas.
+            Comer sano no es un lujo. <span class="destacada">Facilitar</span> el acceso a productos frescos es un reto para nuestra <span class="destacada">generación</span>.
+            Comer <span class="destacada">temprano</span> y sin <span class="destacada">prisa</span> ayuda a la digestión.
+            Si <span class="destacada">avisamos</span> a la familia y cocinamos juntos, podemos <span class="destacada">llevarnos bien</span> con la dieta. Si no, nuestra salud se <span class="destacada">llevará fatal</span>.
+            Es importante no quedarse <span class="destacada">atónito</span> ante la información, sino actuar con <span class="destacada">razón</span>.
+        </p>
+        <p style="margin-top:12px;">
+            La <span class="destacada">talla</span> de nuestra ropa puede ser un indicador de salud.
+            A veces el deseo de comer algo poco saludable es tan fuerte que parece <span class="destacada">tocar la lotería</span> encontrar un antojo que no dañe.
+            <span class="destacada">Soler</span> comer <span class="destacada">somnoliento</span> o sin prestar atención es un error común.
+            Para disfrutar de una buena comida, nuestro estado de ánimo debe <span class="destacada">despegar</span> y <span class="destacada">aterrizar</span> en el presente.
+        </p>
+        <span class="fuente">Fuente: OMS (adaptado) — Alimentación saludable</span>
+    </div>
+
+    <!-- ============ LISTA DE VOCABULARIO ============ -->
+    <div class="section-title">📚 Tu lista de palabras (todas están en el texto)</div>
+    <div class="word-grid" id="wordList"></div>
+
+    <!-- ============ EJERCICIOS DE VOCABULARIO ============ -->
+    <div class="section-title">✍️ Ejercicios de vocabulario</div>
+    <div id="ejerciciosContainer"></div>
+
+    <!-- ============ NUEVO: IMPERATIVO Y CONDICIONAL ============ -->
+    <div class="section-title">🧠 Gramática: Imperativo y Condicional</div>
+
+    <!-- Teoría -->
+    <div class="teoria-box">
+        <h3>📌 Imperativo (Afirmativo)</h3>
+        <p><strong>Tú:</strong> se usa la 3ª persona del singular del presente de indicativo: <span class="ejemplo">come</span>, <span class="ejemplo">bebe</span>, <span class="ejemplo">compra</span>. Irregulares: <span class="ejemplo">di</span>, <span class="ejemplo">haz</span>, <span class="ejemplo">ve</span>, <span class="ejemplo">pon</span>, <span class="ejemplo">sal</span>, <span class="ejemplo">sé</span>, <span class="ejemplo">ten</span>, <span class="ejemplo">ven</span>.</p>
+        <p><strong>Usted / Ustedes:</strong> se usa el presente de subjuntivo: <span class="ejemplo">coma / coman</span>, <span class="ejemplo">beba / beban</span>.</p>
+        <p><strong>Nosotros:</strong> terminación <span class="ejemplo">-emos</span> (verbos -ar), <span class="ejemplo">-amos</span> (verbos -er/-ir) → <span class="ejemplo">comamos</span>, <span class="ejemplo">bebamos</span>.</p>
+        <p><strong>Vosotros:</strong> infinitivo + <span class="ejemplo">-d</span> → <span class="ejemplo">comed</span>, <span class="ejemplo">bebed</span>. Excepción: <span class="ejemplo">irse</span> → <span class="ejemplo">idos</span>.</p>
+
+        <h3>📌 Imperativo (Negativo)</h3>
+        <p>Se forma con <strong>no</strong> + presente de subjuntivo: <span class="ejemplo">no comas</span>, <span class="ejemplo">no comáis</span>, <span class="ejemplo">no coman</span>, <span class="ejemplo">no comamos</span>.</p>
+
+        <h3>📌 Condicional Simple</h3>
+        <p>Infinitivo + terminaciones: <span class="ejemplo">-ía</span>, <span class="ejemplo">-ías</span>, <span class="ejemplo">-ía</span>, <span class="ejemplo">-íamos</span>, <span class="ejemplo">-íais</span>, <span class="ejemplo">-ían</span>. Ejemplo: <span class="ejemplo">comería</span>, <span class="ejemplo">beberías</span>.</p>
+        <p><strong>Usos principales:</strong> <span class="ejemplo">Consejo</span> (Yo que tú, no comería eso), <span class="ejemplo">Hipótesis</span> (Si cenara temprano, dormiría mejor) y <span class="ejemplo">Cortesía</span> (¿Podría pasar la sal?).</p>
+    </div>
+
+    <!-- Ejercicios de Imperativo y Condicional -->
+    <div id="gramaticaContainer"></div>
+
+    <!-- ============ COMPRENSIÓN LECTORA ============ -->
+    <div class="section-title">📖 Preguntas de comprensión lectora</div>
+    <div id="comprensionContainer"></div>
+
+    <!-- ============ PREGUNTAS ABIERTAS ============ -->
+    <div class="section-title">💭 Preguntas para reflexionar</div>
+    <div id="reflexionContainer"></div>
+
+    <div class="footer">
+        💪 Entrenamiento completo • 33 ejercicios de vocabulario + 10 de gramática + 5 de comprensión + 5 para reflexionar
+    </div>
+</div>
+
+<script>
+    // ================================================================
+    // 1. LISTA COMPLETA DE PALABRAS
+    // ================================================================
+    const todasLasPalabras = [
+        "multa", "talla", "natal", "peligroso", "comparar",
+        "tiburón", "raya", "al menos", "ciudadano", "facilitar",
+        "generación", "imaginar", "temblar", "curar", "prisa",
+        "razón", "imprimir", "traje", "disfraz", "disfrazar",
+        "divinamente", "llevarse bien", "llevarse mal", "llevarse fatal",
+        "rechazar", "temprano", "avisar", "atónito", "tocar la lotería",
+        "soler", "somnoliento", "aterrizar", "despegar"
+    ];
+
+    // ================================================================
+    // 2. EJERCICIOS DE VOCABULARIO (33)
+    // ================================================================
+    const ejercicios = [
+        { palabra: "multa", frase: "Comer mal puede traer una ______ para tu salud.", opciones: ["multa", "talla", "prisa"], correcta: "multa", explicacion: "'Multa' se usa como sanción; aquí es metafórico." },
+        { palabra: "talla", frase: "Mi ______ de ropa aumentó después de meses de mala alimentación.", opciones: ["talla", "traje", "razón"], correcta: "talla", explicacion: "'Talla' es el tamaño de la ropa." },
+        { palabra: "natal", frase: "En mi ciudad ______ la comida es más casera y saludable.", opciones: ["natal", "generación", "divinamente"], correcta: "natal", explicacion: "'Ciudad natal' = donde naciste." },
+        { palabra: "peligroso", frase: "Es ______ comer alimentos con mucha grasa saturada.", opciones: ["peligroso", "somnoliento", "atónito"], correcta: "peligroso", explicacion: "'Peligroso' = que puede dañar la salud." },
+        { palabra: "comparar", frase: "Siempre ______ los precios de la fruta antes de comprar.", opciones: ["comparar", "curar", "imaginar"], correcta: "comparar", explicacion: "'Comparar' = mirar diferencias." },
+        { palabra: "tiburón", frase: "El ______ es un pescado que aporta proteínas, pero tiene mercurio.", opciones: ["tiburón", "raya", "talla"], correcta: "tiburón", explicacion: "'Tiburón' es un pez grande." },
+        { palabra: "raya", frase: "La ______ es un pescado plano que se puede cocinar a la plancha.", opciones: ["raya", "multa", "prisa"], correcta: "raya", explicacion: "'Raya' es un tipo de pescado." },
+        { palabra: "al menos", frase: "Debemos comer ______ cinco piezas de fruta al día.", opciones: ["al menos", "divinamente", "temprano"], correcta: "al menos", explicacion: "'Al menos' = como mínimo." },
+        { palabra: "ciudadano", frase: "Todo ______ tiene derecho a una alimentación digna.", opciones: ["ciudadano", "tiburón", "traje"], correcta: "ciudadano", explicacion: "'Ciudadano' = habitante de una ciudad." },
+        { palabra: "facilitar", frase: "Cocinar en casa ______ comer de forma más saludable.", opciones: ["facilita", "imagina", "cura"], correcta: "facilita", explicacion: "'Facilitar' = hacer más fácil." },
+        { palabra: "generación", frase: "Nuestra ______ tiene el reto de comer mejor que la anterior.", opciones: ["generación", "natal", "razón"], correcta: "generación", explicacion: "'Generación' = grupo de personas de una edad similar." },
+        { palabra: "imaginar", frase: "No ______ que comer sano es aburrido; hay muchas recetas.", opciones: ["imagines", "imaginar", "imagina"], correcta: "imagines", explicacion: "Subjuntivo (negación + 'imaginar')." },
+        { palabra: "temblar", frase: "Si no como, empiezo a ______ de hambre.", opciones: ["temblar", "curar", "avisar"], correcta: "temblar", explicacion: "'Temblar' = moverse por debilidad o frío." },
+        { palabra: "curar", frase: "Una buena dieta puede ______ muchas enfermedades.", opciones: ["curar", "rechazar", "comparar"], correcta: "curar", explicacion: "'Curar' = sanar." },
+        { palabra: "prisa", frase: "Comer con ______ es malo para la digestión.", opciones: ["prisa", "razón", "multa"], correcta: "prisa", explicacion: "'Prisa' = rapidez, urgencia." },
+        { palabra: "razón", frase: "Tienes toda la ______: la comida casera siempre es más sana.", opciones: ["razón", "prisa", "talla"], correcta: "razón", explicacion: "'Tener razón' = estar en lo cierto." },
+        { palabra: "imprimir", frase: "Voy a ______ el menú semanal para tenerlo en la cocina.", opciones: ["imprimir", "disfrazar", "aterrizar"], correcta: "imprimir", explicacion: "'Imprimir' = plasmar en papel." },
+        { palabra: "traje", frase: "Me puse un ______ elegante para cenar en el restaurante.", opciones: ["traje", "disfraz", "talla"], correcta: "traje", explicacion: "'Traje' = vestimenta formal." },
+        { palabra: "disfraz", frase: "Los ultraprocesados son un ______ de comida saludable.", opciones: ["disfraz", "traje", "tiburón"], correcta: "disfraz", explicacion: "'Disfraz' = apariencia falsa." },
+        { palabra: "disfrazar", frase: "La publicidad ______ los alimentos malos como si fueran buenos.", opciones: ["disfraza", "disfrazar", "disfrazan"], correcta: "disfrazan", explicacion: "'Disfrazar' = ocultar la verdadera naturaleza." },
+        { palabra: "divinamente", frase: "Después de una ensalada fresca, me sentí ______.", opciones: ["divinamente", "somnoliento", "atónito"], correcta: "divinamente", explicacion: "'Divinamente' = muy bien, excelente." },
+        { palabra: "llevarse bien", frase: "Mi estómago y yo nos ______ con la comida ligera.", opciones: ["llevamos bien", "llevamos mal", "llevamos fatal"], correcta: "llevamos bien", explicacion: "'Llevarse bien' = tener buena relación." },
+        { palabra: "llevarse mal", frase: "Los lácteos y mi digestión se ______.", opciones: ["llevan mal", "llevan bien", "llevan fatal"], correcta: "llevan mal", explicacion: "'Llevarse mal' = no ser compatible." },
+        { palabra: "llevarse fatal", frase: "Si como fritos, mi cuerpo se ______ con ellos.", opciones: ["lleva fatal", "lleva bien", "lleva mal"], correcta: "lleva fatal", explicacion: "'Llevarse fatal' = muy mala relación." },
+        { palabra: "rechazar", frase: "Debemos ______ los alimentos con demasiados aditivos.", opciones: ["rechazar", "aceptar", "comparar"], correcta: "rechazar", explicacion: "'Rechazar' = no aceptar." },
+        { palabra: "temprano", frase: "Cenar ______ ayuda a dormir mejor.", opciones: ["temprano", "tarde", "divinamente"], correcta: "temprano", explicacion: "'Temprano' = a una hora pronta." },
+        { palabra: "avisar", frase: "Si cambias tu dieta, ______ a tu médico.", opciones: ["avisa", "avisar", "avisas"], correcta: "avisa", explicacion: "'Avisar' = informar, notificar." },
+        { palabra: "atónito", frase: "Me quedé ______ al ver la cantidad de azúcar en un refresco.", opciones: ["atónito", "somnoliento", "peligroso"], correcta: "atónito", explicacion: "'Atónito' = muy sorprendido." },
+        { palabra: "tocar la lotería", frase: "Encontrar un snack sano y rico es como ______.", opciones: ["tocar la lotería", "comparar", "rechazar"], correcta: "tocar la lotería", explicacion: "'Tocar la lotería' = tener mucha suerte." },
+        { palabra: "soler", frase: "Mis padres ______ cenar a las 8 de la noche.", opciones: ["suelen", "solían", "soler"], correcta: "suelen", explicacion: "'Soler' en presente = costumbre habitual." },
+        { palabra: "somnoliento", frase: "Comer mucho me deja ______ y sin energía.", opciones: ["somnoliento", "atónito", "divinamente"], correcta: "somnoliento", explicacion: "'Somnoliento' = con sueño, adormilado." },
+        { palabra: "aterrizar", frase: "Después de comer, mi energía ______ y me relajo.", opciones: ["aterriza", "despega", "temblar"], correcta: "aterriza", explicacion: "'Aterrizar' = llegar, establecerse." },
+        { palabra: "despegar", frase: "Por la mañana, mi ánimo ______ con un buen desayuno.", opciones: ["despega", "aterriza", "cura"], correcta: "despega", explicacion: "'Despegar' = empezar con fuerza, elevarse." }
+    ];
+
+    // ================================================================
+    // 3. EJERCICIOS DE IMPERATIVO Y CONDICIONAL (10)
+    // ================================================================
+    const ejerciciosGramatica = [
+        // Imperativo
+        { tipo: "Imperativo (tú, afirmativo)", frase: "¡______ (comer) más fruta y verdura cada día!", opciones: ["Comes", "Come", "Comas"], correcta: "Come", explicacion: "Imperativo afirmativo para 'tú' = 3ª persona del singular del presente (come)." },
+        { tipo: "Imperativo (usted, afirmativo)", frase: "Señor, ______ (avisar) a su familia sobre la nueva dieta.", opciones: ["Avisa", "Avise", "Avisas"], correcta: "Avise", explicacion: "Imperativo para 'usted' = presente de subjuntivo (avise)." },
+        { tipo: "Imperativo (nosotros, afirmativo)", frase: "______ (cocinar) algo saludable hoy para toda la familia.", opciones: ["Cocina", "Cocinamos", "Cocinemos"], correcta: "Cocinemos", explicacion: "Imperativo para 'nosotros' = -emos (cocinemos)." },
+        { tipo: "Imperativo (vosotros, negativo)", frase: "¡No ______ (rechazar) las verduras, chicos!", opciones: ["rechazáis", "rechacéis", "rechazan"], correcta: "rechacéis", explicacion: "Imperativo negativo para 'vosotros' = no + subjuntivo (rechacéis)." },
+        { tipo: "Imperativo (ustedes, negativo)", frase: "Señores, no ______ (comer) con tanta prisa.", opciones: ["comen", "coman", "comáis"], correcta: "coman", explicacion: "Imperativo negativo para 'ustedes' = no + subjuntivo (coman)." },
+        // Condicional
+        { tipo: "Condicional (consejo)", frase: "Yo que tú, no ______ (comer) ese 'disfraz' de comida saludable.", opciones: ["como", "comería", "comeré"], correcta: "comería", explicacion: "Condicional para dar un consejo (yo que tú + condicional)." },
+        { tipo: "Condicional (hipótesis)", frase: "Si tuviéramos más tiempo, ______ (cocinar) en casa todos los días.", opciones: ["cocinamos", "cocinaríamos", "cocinábamos"], correcta: "cocinaríamos", explicacion: "Condicional para una hipótesis (si + subjuntivo, condicional)." },
+        { tipo: "Condicional (cortesía)", frase: "¿______ (poder) usted recomendarme un menú equilibrado?", opciones: ["Puede", "Podría", "Poder"], correcta: "Podría", explicacion: "Condicional de cortesía para preguntar con educación." },
+        { tipo: "Condicional (consejo)", frase: "Comer sano te ______ (facilitar) la digestión y el sueño.", opciones: ["facilitas", "facilitaría", "facilitará"], correcta: "facilitaría", explicacion: "Condicional para expresar una consecuencia probable o un consejo." },
+        { tipo: "Condicional (hipótesis con 'llevarse')", frase: "Si comiéramos sin pantallas, nos ______ (llevarse) mejor con la comida.", opciones: ["llevamos", "llevaríamos", "llevamos bien"], correcta: "llevaríamos", explicacion: "Condicional para una hipótesis (si + subjuntivo, condicional)." }
+    ];
+
+    // ================================================================
+    // 4. PREGUNTAS DE COMPRENSIÓN
+    // ================================================================
+    const comprension = [
+        { pregunta: "¿Cuántos principios básicos debe tener una dieta saludable según el texto? ¿Cuáles son?", respuesta: "Cuatro principios: adecuación, equilibrio, moderación y diversidad." },
+        { pregunta: "¿Qué debemos hacer con los alimentos ultraprocesados según el texto?", respuesta: "Debemos esforzarnos por rechazarlos, ya que suelen disfrazarse de opciones prácticas." },
+        { pregunta: "Según el texto, ¿qué puede indicar la talla de nuestra ropa?", respuesta: "La talla de nuestra ropa puede ser un indicador de nuestro estado de salud." },
+        { pregunta: "¿Qué error común se menciona sobre la forma de comer?", respuesta: "Un error común es soler comer somnoliento o sin prestar atención a la comida." },
+        { pregunta: "¿Qué recomienda el texto para llevarse bien con la dieta?", respuesta: "Recomienda avisar a la familia y cocinar juntos." }
+    ];
+
+    // ================================================================
+    // 5. PREGUNTAS ABIERTAS
+    // ================================================================
+    const reflexion = [
+        "¿Crees que es más caro comer sano o comer mal? Justifica tu respuesta con ejemplos de tu día a día.",
+        "¿Qué obstáculos encuentras en tu rutina diaria para seguir una dieta equilibrada? (horario, dinero, acceso, etc.)",
+        "¿Cómo influye el estado de ánimo en nuestra alimentación? Y al revés, ¿cómo crees que la alimentación afecta a nuestro estado de ánimo?",
+        "¿Qué papel juegan la publicidad y el 'disfraz' de los alimentos ultraprocesados en nuestras decisiones de compra?",
+        "¿Por qué crees que es importante comer sin prisa y con atención plena? ¿Qué beneficios tiene para la salud?"
+    ];
+
+    // ================================================================
+    // RENDER
+    // ================================================================
+    const wordListEl = document.getElementById('wordList');
+    const ejerciciosContainer = document.getElementById('ejerciciosContainer');
+    const gramaticaContainer = document.getElementById('gramaticaContainer');
+    const comprensionContainer = document.getElementById('comprensionContainer');
+    const reflexionContainer = document.getElementById('reflexionContainer');
+
+    // --- 1. Lista de palabras ---
+    todasLasPalabras.forEach(p => {
+        const span = document.createElement('span');
+        span.innerHTML = `${p} <span class="badge">✓</span>`;
+        wordListEl.appendChild(span);
+    });
+
+    // --- 2. Ejercicios de vocabulario ---
+    ejercicios.forEach((ej, index) => {
+        const div = document.createElement('div');
+        div.className = 'ejercicio';
+        div.id = `ej-${index}`;
+
+        const num = document.createElement('p');
+        num.textContent = `Ejercicio ${index+1}`;
+        div.appendChild(num);
+
+        const frase = document.createElement('div');
+        frase.className = 'frase';
+        const textoFrase = ej.frase.replace('______', '<span class="blank">______</span>');
+        frase.innerHTML = textoFrase;
+        div.appendChild(frase);
+
+        const opcionesDiv = document.createElement('div');
+        opcionesDiv.className = 'opciones';
+        ej.opciones.forEach((opt) => {
+            const label = document.createElement('label');
+            const radio = document.createElement('input');
+            radio.type = 'radio';
+            radio.name = `q-${index}`;
+            radio.value = opt;
+            label.appendChild(radio);
+            label.appendChild(document.createTextNode(opt));
+            opcionesDiv.appendChild(label);
+        });
+        div.appendChild(opcionesDiv);
+
+        const btn = document.createElement('button');
+        btn.className = 'btn-respuesta';
+        btn.textContent = 'Comprobar';
+        btn.dataset.index = index;
+        div.appendChild(btn);
+
+        const feedback = document.createElement('div');
+        feedback.className = 'feedback';
+        feedback.id = `fb-${index}`;
+        div.appendChild(feedback);
+
+        ejerciciosContainer.appendChild(div);
+    });
+
+    // Lógica de comprobación de vocabulario
+    document.querySelectorAll('#ejerciciosContainer .btn-respuesta').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            const index = parseInt(this.dataset.index);
+            const ej = ejercicios[index];
+            const container = document.getElementById(`ej-${index}`);
+            const radios = container.querySelectorAll(`input[name="q-${index}"]`);
+            let selected = null;
+            radios.forEach(r => { if (r.checked) selected = r.value; });
+
+            const feedback = document.getElementById(`fb-${index}`);
+
+            if (!selected) {
+                feedback.className = 'feedback error';
+                feedback.innerHTML = `<strong>⚠️</strong> Selecciona una opción primero.`;
+                feedback.style.display = 'block';
+                return;
+            }
+
+            const esCorrecto = (selected === ej.correcta);
+            feedback.className = `feedback ${esCorrecto ? 'acierto' : 'error'}`;
+            feedback.style.display = 'block';
+
+            if (esCorrecto) {
+                feedback.innerHTML = `
+                    <strong>✅ ¡Correcto!</strong> "${ej.correcta}"
+                    <div class="explicacion">${ej.explicacion}</div>
+                `;
+            } else {
+                feedback.innerHTML = `
+                    <strong>❌ No es correcto.</strong> La respuesta era: "${ej.correcta}"
+                    <div class="explicacion">${ej.explicacion}</div>
+                `;
+            }
+
+            radios.forEach(r => r.disabled = true);
+            this.disabled = true;
+        });
+    });
+
+    // --- 3. Ejercicios de gramática (Imperativo y Condicional) ---
+    ejerciciosGramatica.forEach((ej, index) => {
+        const div = document.createElement('div');
+        div.className = 'ejercicio';
+        div.id = `gram-${index}`;
+
+        const num = document.createElement('p');
+        num.textContent = `${ej.tipo} (${index+1})`;
+        div.appendChild(num);
+
+        const frase = document.createElement('div');
+        frase.className = 'frase';
+        const textoFrase = ej.frase.replace('______', '<span class="blank">______</span>');
+        frase.innerHTML = textoFrase;
+        div.appendChild(frase);
+
+        const opcionesDiv = document.createElement('div');
+        opcionesDiv.className = 'opciones';
+        ej.opciones.forEach((opt) => {
+            const label = document.createElement('label');
+            const radio = document.createElement('input');
+            radio.type = 'radio';
+            radio.name = `g-${index}`;
+            radio.value = opt;
+            label.appendChild(radio);
+            label.appendChild(document.createTextNode(opt));
+            opcionesDiv.appendChild(label);
+        });
+        div.appendChild(opcionesDiv);
+
+        const btn = document.createElement('button');
+        btn.className = 'btn-respuesta';
+        btn.textContent = 'Comprobar';
+        btn.dataset.index = index;
+        div.appendChild(btn);
+
+        const feedback = document.createElement('div');
+        feedback.className = 'feedback';
+        feedback.id = `fbg-${index}`;
+        div.appendChild(feedback);
+
+        gramaticaContainer.appendChild(div);
+    });
+
+    // Lógica de comprobación de gramática
+    document.querySelectorAll('#gramaticaContainer .btn-respuesta').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            const index = parseInt(this.dataset.index);
+            const ej = ejerciciosGramatica[index];
+            const container = document.getElementById(`gram-${index}`);
+            const radios = container.querySelectorAll(`input[name="g-${index}"]`);
+            let selected = null;
+            radios.forEach(r => { if (r.checked) selected = r.value; });
+
+            const feedback = document.getElementById(`fbg-${index}`);
+
+            if (!selected) {
+                feedback.className = 'feedback error';
+                feedback.innerHTML = `<strong>⚠️</strong> Selecciona una opción primero.`;
+                feedback.style.display = 'block';
+                return;
+            }
+
+            const esCorrecto = (selected === ej.correcta);
+            feedback.className = `feedback ${esCorrecto ? 'acierto' : 'error'}`;
+            feedback.style.display = 'block';
+
+            if (esCorrecto) {
+                feedback.innerHTML = `
+                    <strong>✅ ¡Correcto!</strong> "${ej.correcta}"
+                    <div class="explicacion">${ej.explicacion}</div>
+                `;
+            } else {
+                feedback.innerHTML = `
+                    <strong>❌ No es correcto.</strong> La respuesta era: "${ej.correcta}"
+                    <div class="explicacion">${ej.explicacion}</div>
+                `;
+            }
+
+            radios.forEach(r => r.disabled = true);
+            this.disabled = true;
+        });
+    });
+
+    // --- 4. Preguntas de comprensión ---
+    comprension.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'question-card';
+
+        const qText = document.createElement('div');
+        qText.className = 'q-text';
+        qText.textContent = `${index+1}. ${item.pregunta}`;
+        card.appendChild(qText);
+
+        const btn = document.createElement('button');
+        btn.className = 'btn-mostrar';
+        btn.textContent = 'Mostrar respuesta';
+        card.appendChild(btn);
+
+        const respDiv = document.createElement('div');
+        respDiv.className = 'respuesta';
+        respDiv.textContent = item.respuesta;
+        card.appendChild(respDiv);
+
+        btn.addEventListener('click', function() {
+            const isVisible = respDiv.classList.contains('visible');
+            if (isVisible) {
+                respDiv.classList.remove('visible');
+                this.textContent = 'Mostrar respuesta';
+            } else {
+                respDiv.classList.add('visible');
+                this.textContent = 'Ocultar respuesta';
+            }
+        });
+
+        comprensionContainer.appendChild(card);
+    });
+
+    // --- 5. Preguntas abiertas ---
+    reflexion.forEach((texto, index) => {
+        const div = document.createElement('div');
+        div.className = 'open-question';
+
+        const num = document.createElement('div');
+        num.className = 'num';
+        num.textContent = index + 1;
+        div.appendChild(num);
+
+        const textDiv = document.createElement('div');
+        textDiv.className = 'texto';
+        textDiv.textContent = texto;
+        div.appendChild(textDiv);
+
+        reflexionContainer.appendChild(div);
+    });
+
+</script>
+</body>
+</html>
